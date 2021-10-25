@@ -1,3 +1,1 @@
-*.HTML linguist-detectable=false
-*.Html linguist-detectable=false
-*.html linguist-detectable=false
+static/* linguist-vendored
