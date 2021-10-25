@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>chec</title>
+{% endblock title %}
+
+{% block body %}
+
+<div class="bg-light">
+  <div class="container">
+    <div class="py-5 text-center">
+      
+      <h2 class="d-block mx-auto mb-4 mt-5" >Checkout form</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Your cart</span>
+          <span class="badge badge-secondary badge-pill" id="cart2"> </span>
+        </h4>
+        <ul class="list-group mb-3" id="items">
+        </ul>
+
+ <!-- Button trigger modal -->
+<button type="button" class="btn btn-lg btn-block btn-primary" data-toggle="modal" data-target="#exampleModal">
+ Already a customer!
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Sign Up! </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/login">
+          {% csrf_token %}
+          <input type="hidden" name="itemsJson" id="itemsJson">
+          <input type="hidden" name="totle_price" id="totle_price">
+          <input type="hidden" name="No_of_items" id="No_of_items">
+          
+          <div class="mb-3">
+            <label for="email">Email </label>
+            <input type="email" class="form-control" required id="email"  name ="email" placeholder="you@example.com">
+            <div class="invalid-feedback">
+              Please enter a valid email address
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="password"> Password </label>
+            <input type="password" class="form-control" id="password"  name ="password" placeholder="*********">
+            <div class="invalid-feedback">
+              Please enter a valid Password
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->
+
+      </div>
+      <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Billing Address</h4>
+        <!-- -----------------------  FORM   ---------------------- -->
+        <form method="POST" action="/checkout">
+          {% csrf_token %}
+          <input type="hidden" name="itemsJson" id="itemsJson2">
+          <input type="hidden" name="totle_price" id="totle_price2">
+          <input type="hidden" name="No_of_items" id="No_of_items2">
+          <div class="mb-3">
+            <label for="username">Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+              <input type="text" class="form-control" id="username" name ="name" placeholder="Username" required="">
+              <div class="invalid-feedback" style="width: 100%;">
+                Your Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email">Email </label>
+            <input type="email" class="form-control" id="email"  name ="email" placeholder="you@example.com">
+            <div class="invalid-feedback">
+              Please enter a valid email address
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="password"> Password for Sign up</label>
+            <input type="password" class="form-control" id="password"  name ="password" placeholder="Enter your Password.......">
+            <div class="invalid-feedback">
+              Please enter a valid Password
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name ="city" id="city" placeholder="City Name" required="">
+              <div class="invalid-feedback">
+                Please select a valid City Name.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="zip">Zip</label>
+              <input type="text" class="form-control"  name ="zip" id="zip" placeholder="" required="">
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone">Phone No.</label>
+              <input type="text" class="form-control" id="phone" name ="phone"  placeholder="Your Active Phone # " required="">
+              <div class="invalid-feedback">
+                Please select a valid Phone No.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="street">Street No.</label>
+              <input type="text" class="form-control" id="street" name ="street"  placeholder="Your street # " required="">
+              <div class="invalid-feedback">
+                Please select a valid street No.
+              </div>
+            </div>
+          </div>
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock body %}
+
+{% block js %}
+<script>
+
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+  }
+  console.log(cart);
+  var sum = 0;
+  var total_price = 0
+  if ($.isEmptyObject(cart)) {
+    //if object is empty
+    mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
+    $('#items').append(mystr);
+  } 
+  else
+   {
+    for (item in cart) {
+      let qty = cart[item][0];
+      let name = cart[item][1];
+      let price = cart[item][2];
+      sum += qty;
+      let price2 = price * qty;
+      total_price += price2;
+      mystr = `<li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0"> ${name}</h6>
+            </div>
+            <span class="text-muted">Rs ${price2}</span>
+          </li>`
+      $('#items').append(mystr);
+    }
+    mystr = `<li class="list-group-item d-flex justify-content-between bg-light">
+            <strong class="text-success ">Total </strong>
+            <strong class="text-success" >${total_price}</strong>
+          </li> `;
+
+    $('#items').append(mystr);
+  }
+
+  document.getElementById('cart').innerHTML = sum;
+  document.getElementById('cart2').innerHTML = sum;
+ 
+ $('#totle_price').val(total_price);
+ $('#No_of_items').val(sum);
+      
+$('#itemsJson').val(JSON.stringify(cart));
+
+ $('#totle_price2').val(total_price);
+ $('#No_of_items2').val(sum);
+      
+$('#itemsJson2').val(JSON.stringify(cart));
+
+{% if thank is 1 %}
+alert('Thanks for ordering with us.Your order has been saved');
+localStorage.clear();
+document.location = "/order";
+
+ {% elif thank is 2  %}
+alert('Your Email did not matched!!');
+document.location = "/checkout";
+
+ {% elif thank is 3  %}
+alert('The Email and Password Already Exist !!!');
+document.location = "/checkout";
+{% endif %}
+
+</script>
+{% endblock %}

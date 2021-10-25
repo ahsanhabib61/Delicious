@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% block title %}
+   
+  {% endblock title %}
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+ 
+ {% block css %}
+ 
+ {% endblock css %}
+
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+
+
+  <nav class="navbar navbar-expand-md fixed-top">
+    <a class=" navbar-brand text-white ml-3 h1" href="http://127.0.0.1:8000/">Delicious</a>
+    <ul class="navbar-nav ml-auto">
+      
+      <li class="nav-item active h1 "> <a class="nav-link " href="/"> Home </a> </li>
+
+    </ul>
+    
+    <!-- <a href="/order" class="btn btn-secondary mx-2" id="popcart" >
+       Cart  <span id="cart"></span>
+     </a> -->
+    <button class="btn btn-secondary mx-2" id="popcart" >
+       Cart  <span id="cart"></span>
+    </button>
+
+  </nav>
+
+ 
+  <!-- End of  Navbar -->
+
+
+  {% block body %}
+
+  
+  {% endblock body %}
+
+  <br><br><br><br><br><br>
+
+
+
+
+  <!---------------------------------------- FOOOOOOOTEERRRR---------------------------------------->
+
+  <footer style="background-color: rgb(12, 10, 10);">
+    <section class="text-center text-white h2 pt-5"> Follow Us
+    </section>
+    <div class=" text-white  text-center mt-4">
+      <p>
+        <a href="#"> <img class="f-icon" src=" {% static 'img/f.png' %}" alt="Loading....."></a>
+        <a href="#"> <img class="f-icon" src=" {% static 'img/t.png' %}" alt="Loading....."></a>
+        <a href="#"> <img class="f-icon" src=" {% static 'img/g.png' %}" alt="Loading....."></a>
+        <br> <br>
+        Address: <br> 121 Street, Melbourne Victoria <br> 3000 Australia <br> <br>
+        Phone: <br> 90 987 65 44 <br> <br>
+        Email: <br> <a href="mailto:info@yoursite.com">info@yoursite.com</a>
+      </p>
+      <br>
+      <h6 class="text-muted"> All rights Reserve &copy; 2020</h6>
+    </div>
+    <br> <br><br>
+  </footer>
+  {% load static %}
+   <script src="{% static 'js/jquery.js' %}"></script>
+   <script src="{% static 'js/popper.min.js' %}"></script>
+   <script src="{% static 'js/bootstrap.js' %}"></script> 
+
+  {% block js %}
+  
+  {% endblock %}
+
+</body>
+
+</html>
