@@ -1,4 +1,2 @@
-static/* linguist-vendored
-*.Html linguist-detectable=false
 *.Python linguist-detectable=true
-
+*.Html linguist-detectable=false
