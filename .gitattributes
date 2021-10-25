@@ -1,2 +1,4 @@
-*.sol linguist-detectable=true
-*.html linguist-detectable=false
+static/* linguist-vendored
+*.Html linguist-detectable=false
+*.Python linguist-detectable=true
+
