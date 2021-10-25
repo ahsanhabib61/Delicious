@@ -1,1 +1,2 @@
-*.sol linguist-language=Solidity
+*.sol linguist-detectable=true
+*.html linguist-detectable=false
