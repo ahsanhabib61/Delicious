@@ -1,2 +1,4 @@
 *.python linguist-detectable=true
-*.HTML linguist-detectable=true
+*.HTML linguist-detectable=false
+*.javascript linguist-detectable=true
+*.JQuery linguist-detectable=true
